@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class BookRest {
 
     /**
-     * Class for holding the list of customers and handling the requests
+     * Class for holding the list of Books and handling the requests
      */
 
     private static ArrayList<Book> library = new ArrayList<>();
@@ -22,12 +22,12 @@ public class BookRest {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("{title}")
-    public String getCustomerList(@PathParam("title") String title) {
-        Book customer = library.stream().filter(customer1 -> customer1.getTitle().equals(title))
+    public String getBook(@PathParam("title") String title) {
+        Book book = library.stream().filter(theBook -> theBook.getTitle().equals(title))
                 .findFirst()
                 .orElse(null);
-        if (customer != null) {
-            return customer.toString();
+        if (book != null) {
+            return book.toString();
         } else {
             return "";
         }
@@ -43,10 +43,10 @@ public class BookRest {
     @Path("{title}/{author}/{isbn}")
     public void modifyBook(@PathParam("title") String title, @PathParam("author") String author,
                                @PathParam("isbn") String isbn) {
-        library = library.stream().filter(customer -> !customer.getTitle().equals(title))
+        library = library.stream().filter(book -> !book.getTitle().equals(title))
                 .collect(Collectors.toCollection(ArrayList::new));
-        Book newCustomer = new Book(title, author, isbn);
-        library.add(newCustomer);
+        Book newBook = new Book(title, author, isbn);
+        library.add(newBook);
     }
 
 }
