@@ -1,4 +1,4 @@
-# Lab02 - SOEN 487
+# Lab03 - SOEN 487
 
 This is the template provided to start the web server for the second lab.
 
@@ -9,10 +9,6 @@ We encourage you to use either IntelliJ IDE **or** maven from command line in or
 1. The server/REST API
    * Located in the rest package
    * Is used to hold the REST API built in the previous lab
-
-2. The client
-   * Located in the client package
-   * Is used to hold the related classes for building the client side for our lab
 
 ## IntelliJ Instructions ##
 
@@ -35,9 +31,6 @@ We encourage you to use either IntelliJ IDE **or** maven from command line in or
 
     Run (Server)
         mvn exec:java -Pserver
-
-    Run (Customer Client)
-        mvn -e exec:java -Pbook
 
     Clean:
         mvn clean
