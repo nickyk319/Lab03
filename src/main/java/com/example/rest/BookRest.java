@@ -11,8 +11,13 @@ public class BookRest {
     /**
      * Class for holding the list of Books and handling the requests
      */
-
     private static ArrayList<Book> library = new ArrayList<>();
+
+    @GET
+    @Produces("application/xml")
+    public ArrayList<Book> getBook(){
+        return library;
+    }
 
     /**
      * Meant for getting a book with a specific title
@@ -20,32 +25,32 @@ public class BookRest {
      * @return toString method of book
      */
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces("application/xml")
     @Path("{title}")
-    public String getBook(@PathParam("title") String title) {
-        Book book = library.stream().filter(theBook -> theBook.getTitle().equals(title))
+    public Book getBook(@PathParam("title") String title) {
+        return library.stream().filter(theBook -> theBook.getTitle().equals(title))
                 .findFirst()
                 .orElse(null);
-        if (book != null) {
-            return book.toString();
-        } else {
-            return "";
-        }
+
+    }
+
+    @POST
+    @Consumes("application/x-www-form-urlencoded")
+    public void createBook(@FormParam("title") String title, @FormParam("author") String author, @FormParam("isbn") String isbn){
+        Book newBook = new Book(title, author, isbn);
+        library.add(newBook);
     }
 
     /**
      * Meant for replacing book with specific title
-     * @param title of the book
-     * @param author of the book
-     * @param isbn of the book
+     *
      */
     @PUT
-    @Path("{title}/{author}/{isbn}")
-    public void modifyBook(@PathParam("title") String title, @PathParam("author") String author,
-                               @PathParam("isbn") String isbn) {
-        library = library.stream().filter(book -> !book.getTitle().equals(title))
+    @Consumes("application/xml")
+    public void modifyBook(Book book) {
+        library = library.stream().filter(theBook -> !theBook.getTitle().equals(book.title))
                 .collect(Collectors.toCollection(ArrayList::new));
-        Book newBook = new Book(title, author, isbn);
+        Book newBook = new Book(book);
         library.add(newBook);
     }
 
